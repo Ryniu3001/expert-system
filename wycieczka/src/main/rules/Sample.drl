@@ -1,0 +1,100 @@
+package com.sample
+ 
+import com.sample.DroolsTest.*;
+import java.util.Scanner;
+import com.sample.Ask.*;
+
+rule "Age"
+    when
+    then
+        Age w = new Age(Ask.inputInt("Podaj swój wiek:"));
+        insert(w);
+end
+
+rule "Sex"
+    when
+        exists Age();
+    then      
+        insert(new Sex(Ask.chooseOne("Jaka jest Twoja plec?", "Kobieta", "Mezczyzna")));      
+       
+end
+
+rule "Money"
+	when
+		exists Sex();
+	then
+		insert(new Budget( Ask.inputInt("Ile mo¿esz przeznaczyæ na wycieczkê?") ));
+end
+
+rule "Entaintement"
+	when
+		exists Budget();
+	then
+		insert( new Entertainment( Ask.yesNo("Lubisz imprezowaæ?", "Pytanie")));
+end
+
+rule "FarTravel"
+	when
+		exists Entertainment();
+	then
+		insert( new FarTravel( Ask.yesNo( "Lubisz Dalekie podró¿e?", "Pytanie")));
+end
+
+rule "Phobia"
+	when 
+		exists FarTravel()
+	then
+		insert( new Acrophobia( Ask.yesNo( "Masz lek wysokosci", "Pytanie")));
+end
+
+rule "Sea"
+	when 
+		exists Acrophobia( isValue() == false);
+	then
+		insert( new Sea( Ask.yesNo( "Lubisz wode?", "Pytanie")));
+end
+
+rule "Culture"
+
+
+	when
+		exists Acrophobia()
+		exists FarTravel( isValue() == true)
+	then
+		insert( new Culture( Ask.chooseOne("Jak¹ kulture lubisz?", "Daleki Wschód", "Czarny Kontynent", "Kultura Zachody")));
+end
+
+rule "Color"
+	when
+		exists Acrophobia();
+	then
+		insert( new Color( Ask.chooseOne("Ulubiony kolor?", "Czarny", "Niebieski", "¯ó³ty", "Zielony")));
+end
+
+rule "Warm"
+	when 
+		exists Color()
+		exists FarTravel( isValue() == true)
+	 then
+	 	insert( new Warm( Ask.yesNo("Lublisz gor¹cy klimat?", "Pytanie")));
+end
+
+rule "Death"
+	when 
+		exists Color();
+	then
+		insert( new FearOfDeath( Ask.yesNo("Boisz siê œmierci.", "Pytanie")));
+end
+
+
+
+	
+	
+	
+	
+	
+	
+		
+		
+		
+		
