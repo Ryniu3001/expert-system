@@ -18,4 +18,17 @@ public final class Ask{
 		
 		return ob.toString();
 	}
+	
+/*	public static String chooseOne(String question, String...args){
+		int n = JOptionPane.showOptionDialog(null,
+			    question,
+			    "Pytanie",
+			    JOptionPane.YES_NO_CANCEL_OPTION,
+			    JOptionPane.QUESTION_MESSAGE,
+			    null,
+			    args,
+			    args[0]);
+		return "sasd";
+	}*/
+	
 }
