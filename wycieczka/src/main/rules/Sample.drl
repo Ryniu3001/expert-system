@@ -7,13 +7,13 @@ import com.sample.Ask.*;
 rule "Age"
     when
     then
-        Age w = new Age(Ask.inputInt("Podaj swój wiek:"));
+        Age w = new Age(Ask.inputInt("Podaj swój wiek (>16):"));
         insert(w);
 end
 
 rule "Sex"
     when
-        exists Age( value > 0 )
+        exists Age( value > 15 && value < 70 )
     then      
         insert(new Sex(Ask.chooseOne("Jaka jest Twoja p³eæ?", "kobieta", "mê¿czyzna")));      
        
@@ -215,7 +215,15 @@ rule "Ans8"
 	then
 		System.out.println("P³yniesz kajakiem do USA. Na miejscu czeka Ciê spacer po parku i tanie jedzenie w KFC ");
 end	
-	
+
+
+rule "Ans43"
+	when 
+		Age ( value > 69 )
+	then
+		Ask.answer("Przejdz siê na spacer po najbli¿szym parku czy cmenatarzu gdzie znajdziesz kiedyœ dla siebie miejsce.\n"+
+		"Podró¿owaæ trzeba by³o za m³odu :)");
+end		
 
 rule "Ans44"
 	when 
