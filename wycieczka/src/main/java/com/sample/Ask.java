@@ -40,4 +40,8 @@ public final class Ask{
 		return n;
 	}
 	
+	public static void answer(String value){
+		JOptionPane.showMessageDialog(null, value, "Wiadomoœæ", JOptionPane.INFORMATION_MESSAGE); 
+	}
+	
 }

@@ -44,12 +44,12 @@ rule "Color"
 	when
 		exists FearOfDeath()
 	then
-		insert( new Color( Ask.chooseOne("Ulubiony kolor?", "Czarny", "Niebieski", "¯ó³ty", "Zielony")));
+		insert( new Color( Ask.chooseOne("Ulubiony kolor?", "Niebieski", "Czarny", "¯ó³ty", "Zielony")));
 end
 
 rule "Phobia"
 	when 
-		exists Color()
+		exists Color( value > 0 )
 	then
 		insert( new Acrophobia( Ask.yesNo( "Masz lek wysokosci")));
 end
@@ -217,6 +217,11 @@ rule "Ans8"
 end	
 	
 		
-		
+rule "Ans49"
+	when 
+		Color( value == 0 )
+	then
+		Ask.answer("Wybierasz siê w piêkn¹ podró¿ do lasu smerfów! :)");
+end		
 		
 		
