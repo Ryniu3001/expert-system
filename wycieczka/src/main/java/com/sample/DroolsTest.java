@@ -86,8 +86,16 @@ public class DroolsTest {
     	private int value;
     	
     	public Sex(int b){
-    		value = b;
-    	}	
+    		setValue(b);
+    	}
+
+		public int getValue() {
+			return value;
+		}
+
+		public void setValue(int value) {
+			this.value = value;
+		}	
     }
     
     public static class Entertainment {

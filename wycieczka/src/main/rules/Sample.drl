@@ -23,7 +23,7 @@ rule "Money"
 	when
 		exists Sex()
 	then
-		insert(new Budget( Ask.inputInt("Ile mo¿esz przeznaczyæ na wycieczkê?")));
+		insert(new Budget( Ask.inputInt("Ile mo¿esz przeznaczyæ na wycieczkê (0-50000) ?")));
 end
 
 rule "Entaintement"
@@ -216,12 +216,68 @@ rule "Ans8"
 		System.out.println("P³yniesz kajakiem do USA. Na miejscu czeka Ciê spacer po parku i tanie jedzenie w KFC ");
 end	
 	
+
+rule "Ans44"
+	when 
+		Color ( value == 0 )
+		Sex ( value == 1 )
+		Entertainment ()
+		FearOfDeath( value == false )
+	then
+		Ask.answer("Idziesz do lasu szukaæ wioski smerfów. Znajdujesz niebieskiego grzyba. Po krótkim zastanowieniu postanawiasz sprawdziæ jego dzia³anie.\n"+
+		"Tracisz przytomnoœæ i budzisz siê w chatce Papy Smerfa który przywróci³ Cie do zdrowia.");
+end	
+		
+rule "Ans45"
+	when 
+		Color (value == 0 )
+		Sex ( value == 0 )
+		Entertainment ()
+		FearOfDeath( value == false )
+	then
+		Ask.answer("Idziesz do lasu szukaæ wioski smerfów. Znajdujesz niebieskiego grzyba. Bez zastanowienia postanawiasz sprawdziæ jego dzia³anie.\n"+
+		"Tracisz przytomnoœæ i budzisz siê w chatce Gargamela, który postanawia Cie wykorzystaæ... w swoich planach z³apania smerfów.");
+end	
+
+rule "Ans46"
+	when 
+		Color ( value == 0 )
+		Sex ( value == 1 )
+		Entertainment ( value == true )
+		FearOfDeath( value == true )
+	then
+		Ask.answer("Wybierasz siê w podró¿ do lasu smerfów! :) Smerfetka zaprsza Cie do swojego ogródka na grila.\n "+
+		"Kie³baski z waszego grila zjad³ £asuch, wiêc idziecie do jej chatki by wspólnie wypiæ coœ mocniejszego. Wasza historia siê rozpoczyna...:)");
+end	
+		
+rule "Ans47"
+	when 
+		Color (value == 0 )
+		Sex ( value == 0 )
+		Entertainment ( value == true )
+		FearOfDeath( value == true )
+	then
+		Ask.answer("Wybierasz siê w podró¿ do lasu smerfów! :) Papa Smerf zaprsza Cie do swojej chatki.\nUrz¹dzacie impreze ze smerfami po której Papa pokazuje Ci swoj¹ ksiêge zaklêæ i razem æwiczycie \"sztuczki\" :)");
+end	
+
+rule "Ans48"
+	when 
+		Color ( value == 0 )
+		Sex ( value == 1 )
+		Entertainment ( value == false )
+		FearOfDeath( value == true )
+	then
+		Ask.answer("Wybierasz siê w piêkn¹ podró¿ do lasu w poszukiwaniu wioski smerfów!\nSmerfetka zaprsza Cie do swojej chatki na pyszne ciasteczka :)");
+end	
 		
 rule "Ans49"
 	when 
-		Color( value == 0 )
+		Color (value == 0 )
+		Sex ( value == 0 )
+		Entertainment ( value == false )
+		FearOfDeath( value == true )
 	then
-		Ask.answer("Wybierasz siê w piêkn¹ podró¿ do lasu smerfów! :)");
+		Ask.answer("Wybierasz siê w piêkn¹ podró¿ do lasu w poszukiwaniu wioski smerfów!\n Papa Smerf zaprsza Cie do swojej chatki na kolorowe napoje :)");
 end		
 		
 		
