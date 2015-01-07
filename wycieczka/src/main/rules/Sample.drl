@@ -13,86 +13,208 @@ end
 
 rule "Sex"
     when
-        exists Age();
+        exists Age( value > 0 )
     then      
-        insert(new Sex(Ask.chooseOne("Jaka jest Twoja plec?", "Kobieta", "Mezczyzna")));      
+        insert(new Sex(Ask.chooseOne("Jaka jest Twoja p³eæ?", "kobieta", "mê¿czyzna")));      
        
 end
 
 rule "Money"
 	when
-		exists Sex();
+		exists Sex()
 	then
-		insert(new Budget( Ask.inputInt("Ile mo¿esz przeznaczyæ na wycieczkê?") ));
+		insert(new Budget( Ask.inputInt("Ile mo¿esz przeznaczyæ na wycieczkê?")));
 end
 
 rule "Entaintement"
 	when
-		exists Budget();
+		exists Budget( value > 0 && value < 50000);
 	then
-		insert( new Entertainment( Ask.yesNo("Lubisz imprezowaæ?", "Pytanie")));
+		insert( new Entertainment( Ask.yesNo("Lubisz rozrywkê?")));
 end
 
-rule "FarTravel"
-	when
+rule "Death"
+	when 
 		exists Entertainment();
 	then
-		insert( new FarTravel( Ask.yesNo( "Lubisz Dalekie podró¿e?", "Pytanie")));
+		insert( new FearOfDeath( Ask.yesNo("Boisz siê œmierci.")));
+end
+
+rule "Color"
+	when
+		exists FearOfDeath()
+	then
+		insert( new Color( Ask.chooseOne("Ulubiony kolor?", "Czarny", "Niebieski", "¯ó³ty", "Zielony")));
 end
 
 rule "Phobia"
 	when 
-		exists FarTravel()
+		exists Color()
 	then
-		insert( new Acrophobia( Ask.yesNo( "Masz lek wysokosci", "Pytanie")));
+		insert( new Acrophobia( Ask.yesNo( "Masz lek wysokosci")));
 end
 
 rule "Sea"
 	when 
 		exists Acrophobia( isValue() == false);
 	then
-		insert( new Sea( Ask.yesNo( "Lubisz wode?", "Pytanie")));
+		insert( new Sea( Ask.yesNo( "Lubisz wode?")));
 end
+
+rule "FarTravel"
+	when
+		exists Sea()
+		not FarTravel()
+	then
+		insert( new FarTravel( Ask.yesNo( "Lubisz Dalekie podró¿e?")));
+end
+
+rule "FarTravel2"
+	when
+		exists Acrophobia ( value == true)
+		not FarTravel()
+	then
+		insert( new FarTravel( Ask.yesNo( "Lubisz Dalekie podró¿e?")));
+end
+
 
 rule "Culture"
-
-
 	when
-		exists Acrophobia()
-		exists FarTravel( isValue() == true)
-	then
-		insert( new Culture( Ask.chooseOne("Jak¹ kulture lubisz?", "Daleki Wschód", "Czarny Kontynent", "Kultura Zachody")));
-end
+		FarTravel( value == true)
 
-rule "Color"
-	when
-		exists Acrophobia();
 	then
-		insert( new Color( Ask.chooseOne("Ulubiony kolor?", "Czarny", "Niebieski", "¯ó³ty", "Zielony")));
+		insert( new Culture( Ask.chooseOne("Jak¹ kulture lubisz?", "Daleki Wschód", "Czarny Kontynent", "Kultura Zachodu")));
 end
 
 rule "Warm"
 	when 
-		exists Color()
-		exists FarTravel( isValue() == true)
+		exists Culture()
 	 then
-	 	insert( new Warm( Ask.yesNo("Lublisz gor¹cy klimat?", "Pytanie")));
+	 	insert( new Warm( Ask.yesNo("Lublisz gor¹cy klimat?")));
 end
 
-rule "Death"
+rule "Fast-food"
 	when 
-		exists Color();
+		exists Warm()
+		Culture (value == 2)
 	then
-		insert( new FearOfDeath( Ask.yesNo("Boisz siê œmierci.", "Pytanie")));
+		insert ( new Fastfood(Ask.yesNo("Lubisz Fast-Food?")));
 end
 
+rule "Chinese Food"
+	when 
+		exists Warm()
+		Culture (value == 0)
+	then
+		insert ( new ChineseFood(Ask.yesNo("Lubisz chiñszczyznê?")));
+end
+	
+rule "Exotic Fruits"
+	when
+		exists Warm()
+		Culture	(value == 1)
+	then
+		insert (new ExoticFruits(Ask.yesNo("Lubisz egzotyczne owoce?")));
+end
+	
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 
+rule "Ans1"
+	when
+		Budget(value > 20000)
+		Acrophobia( value == false )
+		Culture(value == 2)
+		Fastfood ( value == true)
+		Sea(value == false)
+	then
+		System.out.println("Lecisz do USA Dreamlinerem w 1 klasie. Na miejscu czeka Ciê wycieczka do gór Skalistych i skok ze spadochronem."+ 
+		"Po wszystkim czeka Cie kolacja w KFC.");
+end
+
+rule "Ans2"
+	when
+		Budget(value > 20000)
+		Acrophobia( value == true )
+		Sea ( value == true)
+		Culture(value == 2)
+		Fastfood ( value == true)
+	then
+		System.out.println("P³yniesz statkiem SeaQueen w 1 klasie obok kajuty kapitana. Na miejscu czeka wycieczka Ciê wcieczka do Oceanarium w Chicago i kurs windsurfingu"+ 
+		"Po wszystkim czeka Cie kolacja w KFC.");
+end
 	
+rule "Ans3"
+	when
+		Budget(value < 20001)
+		Acrophobia( value == false )
+		Culture(value == 2)
+		Fastfood ( value == true)
+		Sea(value == false)
+	then
+		System.out.println("Lecisz do USA Tupolewem w klasie ekonomicznej. Na miejscu czeka Ciê kurs wpinaczkowy"+ 
+		"Po wszystkim czeka Cie kolacja w Mc'Donalds.");
+end
+
+rule "Ans4"
+	when
+		Budget(value < 20001)
+		Acrophobia( value == true )
+		Sea ( value == true)
+		Culture(value == 2)
+		Fastfood ( value == true)
+	then
+		System.out.println("P³yniesz kajakiem do USA. Na miejscu czeka Ciê spacer po parku i tanie jedzenie w KFC ");
+end
+		
+rule "Ans5"
+	when
+		Budget(value > 20000)
+		Acrophobia( value == false )
+		Culture(value == 1)
+		ExoticFruits ( value == true)
+		Sea( value == false)
+	then
+		System.out.println("Lecisz do RPA Dreamlinerem w 1 klasie. Na miejscu czeka Ciê wycieczka na Kilimand¿aro a ze szczytu zlecisz lotni¹"+ 
+		"Po dniu pe³nym emocji i wra¿en zafundujesz sobie kolacje z nieznanych owoców");
+end
+
+rule "Ans6"
+	when
+		Budget(value > 20000)
+		Acrophobia( value == true )
+		Sea ( value == true)
+		Culture(value == 1)
+		ExoticFruits ( value == true)
+
+	then
+		System.out.println("P³yniesz statkiem BlackKing do Afryki. Na miejscu czeka Cie kurs kurs nurkowania"+ 
+		"Po wszystkim czekaj¹ Cie pyszne owoce.");
+end
 	
-	
-	
-	
+rule "Ans7"
+	when
+		Budget(value < 20001)
+		Acrophobia( value == false )
+		Culture(value == 1)
+		ExoticFruits ( value == true)
+		Sea(value == false)
+	then
+		System.out.println("Lecisz do USA Tupolewem w klasie ekonomicznej. Na miejscu czeka Ciê kurs wpinaczkowy"+ 
+		"Po wszystkim czeka Cie kolacja w Mc'Donalds.");
+end
+
+rule "Ans8"
+	when
+		Budget(value < 20001)
+		Acrophobia( value == true )
+		Sea ( value == true)
+		Culture(value == 1)
+		ExoticFruits ( value == true)
+	then
+		System.out.println("P³yniesz kajakiem do USA. Na miejscu czeka Ciê spacer po parku i tanie jedzenie w KFC ");
+end	
 	
 		
 		

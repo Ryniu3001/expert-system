@@ -63,8 +63,7 @@ public class DroolsTest {
 
 		public void setValue(int value) {
 			this.value = value;
-		}
-    	
+		}  	
   
     }
     
@@ -84,9 +83,9 @@ public class DroolsTest {
     }
     
     public static class Sex {
-    	private String value;
+    	private int value;
     	
-    	public Sex(String b){
+    	public Sex(int b){
     		value = b;
     	}	
     }
@@ -152,19 +151,35 @@ public class DroolsTest {
     }
     
     public static class Color {
-    	private String value;
+    	private int value;
     	
-    	public Color(String v){
-    		value = v;
+    	public Color(int v){
+    		setValue(v);
     	}
+
+		public int getValue() {
+			return value;
+		}
+
+		public void setValue(int value) {
+			this.value = value;
+		}
     }
     
     public static class Culture { 
-    	private String value;
+    	private int value;
     	
-    	public Culture(String v){
-    		value = v;
+    	public Culture(int v){
+    		setValue(v);
     	}
+
+		public int getValue() {
+			return value;
+		}
+
+		public void setValue(int value) {
+			this.value = value;
+		}
     }
     
     public static class FearOfDeath {
@@ -195,8 +210,54 @@ public class DroolsTest {
 
 		public void setValue(boolean value) {
 			this.value = value;
+		}    	
+    }
+    
+    public static class Fastfood{
+    	private boolean value;
+    	
+    	public Fastfood(boolean v){
+    		value = v;
+    	}
+
+		public boolean isValue() {
+			return value;
 		}
+
+		public void setValue(boolean value) {
+			this.value = value;
+		}
+    }
+    
+    public static class ChineseFood{
+    	private boolean value;
+
+    	public ChineseFood(boolean v){
+    		value = v;
+    	}
     	
-    	
+		public boolean isValue() {
+			return value;
+		}
+
+		public void setValue(boolean value) {
+			this.value = value;
+		}
+    }
+    
+    public static class ExoticFruits{
+    	public ExoticFruits(boolean value) {
+			this.value = value;
+		}
+
+		private boolean value;
+
+		public boolean isValue() {
+			return value;
+		}
+
+		public void setValue(boolean value) {
+			this.value = value;
+		}
     }
 }
