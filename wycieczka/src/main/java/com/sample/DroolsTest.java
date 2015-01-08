@@ -11,6 +11,7 @@ import org.drools.io.ResourceFactory;
 import org.drools.logger.KnowledgeRuntimeLogger;
 import org.drools.logger.KnowledgeRuntimeLoggerFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
+import com.sample.Ask.*;
 
 /**
  * This is a sample class to launch a rule.
@@ -24,11 +25,10 @@ public class DroolsTest {
             StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
             KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
             // go !
-//            Message message = new Message();
-//            message.setMessage("Hello World");
-//            message.setStatus(Message.HELLO);
-//            ksession.insert(message);
+            Ask.init();
             ksession.fireAllRules();
+            Ask.fDispose();
+            
             logger.close();
         } catch (Throwable t) {
             t.printStackTrace();

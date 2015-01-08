@@ -1,11 +1,24 @@
 package com.sample;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.eclipse.jdt.internal.core.SetContainerOperation;
 
-public final class Ask{
+public final class Ask extends JFrame{
 	
+	public static JFrame frame;	
+	
+	public static  void init(){
+		frame = new JFrame();
+        frame.setUndecorated( true );
+        frame.setVisible( true );
+        frame.setLocationRelativeTo( null );
+	}
+	
+	public static void fDispose(){
+		frame.dispose();
+	}
 	public static boolean yesNo(String question){	
 		int i = JOptionPane.showConfirmDialog(null, question, "Pytanie", JOptionPane.YES_NO_OPTION);
 		if (i == -1) 
@@ -45,6 +58,7 @@ public final class Ask{
 	
 	public static void answer(String value){
 		JOptionPane.showMessageDialog(null, value, "Wiadomoœæ", JOptionPane.INFORMATION_MESSAGE); 
+		
 	}
 	
 }

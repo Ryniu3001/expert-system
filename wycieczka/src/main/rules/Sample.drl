@@ -395,7 +395,7 @@ end
 
 rule "Ans25"
 	when
-		Budget (value < 1000)
+		Budget (value > -1 && value < 1000)
 	then
 		Ask.answer("Przegl¹dasz og³oszenia w poszukiawniu lepszej pracy");
 end
