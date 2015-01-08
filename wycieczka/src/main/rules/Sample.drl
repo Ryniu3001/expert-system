@@ -7,7 +7,7 @@ import com.sample.Ask.*;
 rule "Age"
     when
     then
-        Age w = new Age(Ask.inputInt("Podaj swój wiek (>16):"));
+        Age w = new Age(Ask.inputInt("Podaj swój wiek (>15):"));
         insert(w);
 end
 
@@ -21,14 +21,14 @@ end
 
 rule "Money"
 	when
-		exists Sex()
+		exists Sex(value > -1)
 	then
 		insert(new Budget( Ask.inputInt("Ile mo¿esz przeznaczyæ na wycieczkê (0-50000) ?")));
 end
 
 rule "Entaintement"
 	when
-		exists Budget( value > 0 && value < 50000);
+		exists Budget( value > 1000 && value < 50001);
 	then
 		insert( new Entertainment( Ask.yesNo("Lubisz rozrywkê?")));
 end
@@ -51,7 +51,10 @@ rule "Phobia"
 	when 
 		exists Color( value > 0 )
 	then
-		insert( new Acrophobia( Ask.yesNo( "Masz lek wysokosci")));
+		boolean b = Ask.yesNo( "Masz lek wysokosci");
+		if (b == true)
+			insert (new Sea(true));
+		insert( new Acrophobia(b));
 end
 
 rule "Sea"
@@ -116,7 +119,7 @@ rule "Exotic Fruits"
 	then
 		insert (new ExoticFruits(Ask.yesNo("Lubisz egzotyczne owoce?")));
 end
-	
+//15	
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -129,7 +132,7 @@ rule "Ans1"
 		Fastfood ( value == true)
 		Sea(value == false)
 	then
-		System.out.println("Lecisz do USA Dreamlinerem w 1 klasie. Na miejscu czeka Ciê wycieczka do gór Skalistych i skok ze spadochronem."+ 
+		Ask.answer("Lecisz do USA Dreamlinerem w 1 klasie. Na miejscu czeka Ciê wycieczka do gór Skalistych i skok ze spadochronem.\n"+ 
 		"Po wszystkim czeka Cie kolacja w KFC.");
 end
 
@@ -141,7 +144,7 @@ rule "Ans2"
 		Culture(value == 2)
 		Fastfood ( value == true)
 	then
-		System.out.println("P³yniesz statkiem SeaQueen w 1 klasie obok kajuty kapitana. Na miejscu czeka wycieczka Ciê wcieczka do Oceanarium w Chicago i kurs windsurfingu"+ 
+		Ask.answer("P³yniesz statkiem SeaQueen w 1 klasie obok kajuty kapitana. Na miejscu czeka wycieczka Ciê wcieczka do Oceanarium w Chicago i kurs windsurfingu.\n"+ 
 		"Po wszystkim czeka Cie kolacja w KFC.");
 end
 	
@@ -153,7 +156,7 @@ rule "Ans3"
 		Fastfood ( value == true)
 		Sea(value == false)
 	then
-		System.out.println("Lecisz do USA Tupolewem w klasie ekonomicznej. Na miejscu czeka Ciê kurs wpinaczkowy"+ 
+		Ask.answer("Lecisz do USA Tupolewem w klasie ekonomicznej. Na miejscu czeka Ciê kurs wpinaczkowy.\n"+ 
 		"Po wszystkim czeka Cie kolacja w Mc'Donalds.");
 end
 
@@ -165,19 +168,19 @@ rule "Ans4"
 		Culture(value == 2)
 		Fastfood ( value == true)
 	then
-		System.out.println("P³yniesz kajakiem do USA. Na miejscu czeka Ciê spacer po parku i tanie jedzenie w KFC ");
+		Ask.answer("P³yniesz kajakiem do USA. Na miejscu czeka Ciê spacer po parku i tanie jedzenie w lokalnym fast-foodzie ");
 end
-		
+
 rule "Ans5"
 	when
 		Budget(value > 20000)
 		Acrophobia( value == false )
-		Culture(value == 1)
-		ExoticFruits ( value == true)
-		Sea( value == false)
+		Culture(value == 2)
+		Fastfood ( value == false)
+		Sea(value == false)
 	then
-		System.out.println("Lecisz do RPA Dreamlinerem w 1 klasie. Na miejscu czeka Ciê wycieczka na Kilimand¿aro a ze szczytu zlecisz lotni¹"+ 
-		"Po dniu pe³nym emocji i wra¿en zafundujesz sobie kolacje z nieznanych owoców");
+		Ask.answer("Lecisz do USA Dreamlinerem w 1 klasie. Na miejscu czeka Ciê wycieczka do gór Skalistych i skok ze spadochronem.\n"+ 
+		"Zawaterowanie masz w 5 gwiazdkowym hotelu w którym tak¿e spo¿ywasz najwy¿szej jakoœci posi³ki.");
 end
 
 rule "Ans6"
@@ -185,24 +188,23 @@ rule "Ans6"
 		Budget(value > 20000)
 		Acrophobia( value == true )
 		Sea ( value == true)
-		Culture(value == 1)
-		ExoticFruits ( value == true)
-
+		Culture(value == 2)
+		Fastfood ( value == false)
 	then
-		System.out.println("P³yniesz statkiem BlackKing do Afryki. Na miejscu czeka Cie kurs kurs nurkowania"+ 
-		"Po wszystkim czekaj¹ Cie pyszne owoce.");
+		Ask.answer("P³yniesz statkiem SeaQueen w 1 klasie obok kajuty kapitana. Na miejscu czeka wycieczka Ciê wcieczka do Oceanarium w Chicago i kurs windsurfingu.\n"+ 
+		"Zawaterowanie masz w 5 gwiazdkowym hotelu w którym tak¿e spo¿ywasz najwy¿szej jakoœci posi³ki.");
 end
 	
 rule "Ans7"
 	when
 		Budget(value < 20001)
 		Acrophobia( value == false )
-		Culture(value == 1)
-		ExoticFruits ( value == true)
+		Culture(value == 2)
+		Fastfood ( value == false)
 		Sea(value == false)
 	then
-		System.out.println("Lecisz do USA Tupolewem w klasie ekonomicznej. Na miejscu czeka Ciê kurs wpinaczkowy"+ 
-		"Po wszystkim czeka Cie kolacja w Mc'Donalds.");
+		Ask.answer("Lecisz do USA Tupolewem w klasie ekonomicznej. Na miejscu czeka Ciê kurs wpinaczkowy.\n"+ 
+		"Mieszkasz w przydro¿nym motelu. Tam udajesz siê na skromne odmra¿ane danie.");
 end
 
 rule "Ans8"
@@ -210,14 +212,110 @@ rule "Ans8"
 		Budget(value < 20001)
 		Acrophobia( value == true )
 		Sea ( value == true)
+		Culture(value == 2)
+		Fastfood ( value == false)
+	then
+		Ask.answer("P³yniesz kajakiem do USA. Na miejscu czekaj¹ Ciê takie atrakcje jak spacer po parku\n opalanie na pla¿y i tanie jedzenie w barze mlecznym.");
+end		
+	
+		
+rule "Ans9"
+	when
+		Budget(value > 20000)
+		Acrophobia( value == false )
+		Culture(value == 1)
+		ExoticFruits ( value == true)
+		Sea( value == false)
+	then
+		Ask.answer("Lecisz do RPA Dreamlinerem w 1 klasie. Na miejscu czeka Ciê wycieczka na Kilimand¿aro a ze szczytu zlecisz lotni¹\n"+ 
+		"Po dniu pe³nym emocji i wra¿en zafundujesz sobie kolacje z nieznanych owoców");
+end
+
+rule "Ans10"
+	when
+		Budget(value > 20000)
+		Acrophobia( value == true )
+		Sea ( value == true)
+		Culture(value == 1)
+		ExoticFruits ( value == true)
+
+	then
+		Ask.answer("P³yniesz statkiem BlackKing do Afryki. Na miejscu czeka Cie kurs kurs nurkowania.\n"+ 
+		"Po wszystkim czekaj¹ Cie pyszne owoce i lokalne jedzenie.");
+end
+	
+rule "Ans11"
+	when
+		Budget(value < 20001)
+		Acrophobia( value == false )
+		Culture(value == 1)
+		ExoticFruits ( value == true)
+		Sea(value == false)
+	then
+		Ask.answer("Lecisz do USA Tupolewem w klasie ekonomicznej. Na miejscu czeka Ciê kurs wpinaczkowy.\n"+ 
+		"Na szczycie czekaj¹ tubylcy którzy ugoszcz¹ Cie w³asnorêcznie zdobytym po¿ywieniem w tym egzotycznymi owocami.");
+end
+
+rule "Ans12"
+	when
+		Budget(value < 20001)
+		Acrophobia( value == true )
+		Sea ( value == true)
 		Culture(value == 1)
 		ExoticFruits ( value == true)
 	then
-		System.out.println("P³yniesz kajakiem do USA. Na miejscu czeka Ciê spacer po parku i tanie jedzenie w KFC ");
+		Ask.answer("P³yniesz kajakiem do USA.\nNa miejscu czeka Ciê spacer po parku a nastêpnie zrywanie egzotycznych owoców.");
 end	
 
+rule "Ans13"
+	when
+		Budget(value > 20000)
+		Acrophobia( value == false )
+		Culture(value == 1)
+		ExoticFruits ( value == false)
+		Sea( value == false)
+	then
+		Ask.answer("Lecisz do RPA Dreamlinerem w 1 klasie. Na miejscu czeka Ciê wycieczka na Kilimand¿aro a ze szczytu zlecisz lotni¹"+ 
+		"Po dniu pe³nym emocji i wra¿en otrzymasz przepyszn¹ zupê z ma³pich mó¿d¿ków.");
+end
 
-rule "Ans43"
+rule "Ans14"
+	when
+		Budget(value > 20000)
+		Acrophobia( value == true )
+		Sea ( value == true)
+		Culture(value == 1)
+		ExoticFruits ( value == false)
+
+	then
+		Ask.answer("P³yniesz statkiem BlackKing do Afryki. Na miejscu czeka Cie kurs kurs nurkowania i wycieczka do oceanarium"+ 
+		"Po dwyczerpuj¹cym dniu otrzymasz przepyszn¹ zupê z ma³pich mó¿d¿ków.");
+end
+	
+rule "Ans15"
+	when
+		Budget(value < 20001)
+		Acrophobia( value == false )
+		Culture(value == 1)
+		ExoticFruits ( value == false)
+		Sea(value == false)
+	then
+		Ask.answer("Lecisz do USA Tupolewem w klasie ekonomicznej. Na miejscu czeka Ciê kurs wpinaczkowy"+ 
+		"Po wszystkim czeka Cie wysokobia³kowa kolacja wœród tubylców w postaci w³asnorêcznie zebranych g¹sienic mopani");
+end
+
+rule "Ans16"
+	when
+		Budget(value < 20001)
+		Acrophobia( value == true )
+		Sea ( value == true)
+		Culture(value == 1)
+		ExoticFruits ( value == false)
+	then
+		Ask.answer("P³yniesz kajakiem do USA. Na miejscu czeka Ciê spacer z tubylcami i wspólne pozyskiwanie po¿ywienia");
+end	
+
+rule "Ans17"
 	when 
 		Age ( value > 69 )
 	then
@@ -225,7 +323,7 @@ rule "Ans43"
 		"Podró¿owaæ trzeba by³o za m³odu :)");
 end		
 
-rule "Ans44"
+rule "Ans18"
 	when 
 		Color ( value == 0 )
 		Sex ( value == 1 )
@@ -236,7 +334,7 @@ rule "Ans44"
 		"Tracisz przytomnoœæ i budzisz siê w chatce Papy Smerfa który przywróci³ Cie do zdrowia.");
 end	
 		
-rule "Ans45"
+rule "Ans19"
 	when 
 		Color (value == 0 )
 		Sex ( value == 0 )
@@ -247,7 +345,7 @@ rule "Ans45"
 		"Tracisz przytomnoœæ i budzisz siê w chatce Gargamela, który postanawia Cie wykorzystaæ... w swoich planach z³apania smerfów.");
 end	
 
-rule "Ans46"
+rule "Ans20"
 	when 
 		Color ( value == 0 )
 		Sex ( value == 1 )
@@ -258,7 +356,7 @@ rule "Ans46"
 		"Kie³baski z waszego grila zjad³ £asuch, wiêc idziecie do jej chatki by wspólnie wypiæ coœ mocniejszego. Wasza historia siê rozpoczyna...:)");
 end	
 		
-rule "Ans47"
+rule "Ans21"
 	when 
 		Color (value == 0 )
 		Sex ( value == 0 )
@@ -268,7 +366,7 @@ rule "Ans47"
 		Ask.answer("Wybierasz siê w podró¿ do lasu smerfów! :) Papa Smerf zaprsza Cie do swojej chatki.\nUrz¹dzacie impreze ze smerfami po której Papa pokazuje Ci swoj¹ ksiêge zaklêæ i razem æwiczycie \"sztuczki\" :)");
 end	
 
-rule "Ans48"
+rule "Ans22"
 	when 
 		Color ( value == 0 )
 		Sex ( value == 1 )
@@ -278,7 +376,7 @@ rule "Ans48"
 		Ask.answer("Wybierasz siê w piêkn¹ podró¿ do lasu w poszukiwaniu wioski smerfów!\nSmerfetka zaprsza Cie do swojej chatki na pyszne ciasteczka :)");
 end	
 		
-rule "Ans49"
+rule "Ans23"
 	when 
 		Color (value == 0 )
 		Sex ( value == 0 )
@@ -287,5 +385,18 @@ rule "Ans49"
 	then
 		Ask.answer("Wybierasz siê w piêkn¹ podró¿ do lasu w poszukiwaniu wioski smerfów!\n Papa Smerf zaprsza Cie do swojej chatki na kolorowe napoje :)");
 end		
-		
+
+rule "Ans24"
+	when		
+		FarTravel (value == false)
+	then
+		Ask.answer("Jedziesz w wycieczkê w wybrane 3 miasta polski z osob¹ towarzysz¹c¹ !");	
+end
+
+rule "Ans25"
+	when
+		Budget (value < 1000)
+	then
+		Ask.answer("Przegl¹dasz og³oszenia w poszukiawniu lepszej pracy");
+end
 		

@@ -6,8 +6,11 @@ import org.eclipse.jdt.internal.core.SetContainerOperation;
 
 public final class Ask{
 	
-	public static boolean yesNo(String question){		
-		return JOptionPane.showConfirmDialog(null, question, "Pytanie", JOptionPane.YES_NO_OPTION) == 0;
+	public static boolean yesNo(String question){	
+		int i = JOptionPane.showConfirmDialog(null, question, "Pytanie", JOptionPane.YES_NO_OPTION);
+		if (i == -1) 
+			System.exit(0);
+		return  (i==0);
 	}
 	
 	public static int inputInt(String question){
