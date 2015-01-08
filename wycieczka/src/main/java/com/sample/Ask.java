@@ -14,9 +14,6 @@ public final class Ask extends JFrame{
         frame.setUndecorated( true );
         frame.setVisible( true );
         frame.setLocationRelativeTo( null );
-        
-        sfasdfasdfasdf
-        asdfasdfasdfadf
 	}
 	
 	public static void fDispose(){

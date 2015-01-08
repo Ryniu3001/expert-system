@@ -66,7 +66,8 @@ end
 
 rule "FarTravel"
 	when
-		exists Sea()
+		exists Sea( value == false )
+		
 		not FarTravel()
 	then
 		insert( new FarTravel( Ask.yesNo( "Lubisz Dalekie podró¿e?")));
@@ -93,12 +94,12 @@ rule "Warm"
 	when 
 		exists Culture()
 	 then
-	 	insert( new Warm( Ask.yesNo("Lublisz gor¹cy klimat?")));
+	 	insert( new Warm( Ask.yesNo("Lublisz ciep³y klimat?")));
 end
 
 rule "Fast-food"
 	when 
-		exists Warm()
+		exists Warm( value == true)
 		Culture (value == 2)
 	then
 		insert ( new Fastfood(Ask.yesNo("Lubisz Fast-Food?")));
@@ -106,7 +107,7 @@ end
 
 rule "Chinese Food"
 	when 
-		exists Warm()
+		exists Warm( value == true )
 		Culture (value == 0)
 	then
 		insert ( new ChineseFood(Ask.yesNo("Lubisz chiñszczyznê?")));
@@ -114,7 +115,7 @@ end
 	
 rule "Exotic Fruits"
 	when
-		exists Warm()
+		exists Warm( value == true )
 		Culture	(value == 1)
 	then
 		insert (new ExoticFruits(Ask.yesNo("Lubisz egzotyczne owoce?")));
@@ -399,4 +400,111 @@ rule "Ans25"
 	then
 		Ask.answer("Przegl¹dasz og³oszenia w poszukiawniu lepszej pracy");
 end
-		
+
+	
+
+	
+
+    rule "Ans26"
+            when
+                    Budget(value > 20000)
+                    Acrophobia( value == false )
+                    Culture(value == 0)
+                    ChineseFood ( value == true)
+                    Sea(value == false)
+            then
+                    Ask.answer("Lecisz Dreamlinerem do Pekinu.\nTam poznasz 5 000 lat kultury Chin i posmakujesz ich smacznych przepisów na psa w 4 smakach.");
+    end
+     
+    rule "Ans27"
+            when
+                    Budget(value > 20000)
+                    Acrophobia( value == true )
+                    Sea ( value == true)
+                    Culture(value == 0)
+                    ChineseFood ( value == true)
+            then
+                    Ask.answer("Kolej¹ Transsyberyjsk¹ zmierzasz do Pekinu.\nTam czeka Ciê pozró¿ statkiem po Jangcy posmakujesz ich smacznych przepisów na rybê na s³odko.");
+    end
+           
+    rule "Ans28"
+            when
+                    Budget(value < 20001)
+                    Acrophobia( value == false )
+                    Culture(value == 0)
+                    ChineseFood ( value == true)
+                    Sea(value == false)
+            then
+                    Ask.answer("Jedziesz autostopem do Chin, gdzie spêdzisz resztê ¿ycia pracuj¹c w fabryce zupek chiñskich na powrót do kraju.");
+    end
+     
+    rule "Ans29"
+            when
+                    Budget(value < 20001)
+                    Acrophobia( value == true )
+                    Sea ( value == true)
+                    Culture(value == 0)
+                    ChineseFood ( value == true)
+            then
+                    Ask.answer("P³yniesz nielegalnie wewn¹trz kontenera do Chin.\nTam poznasz prawdziwe ¿ycie Chiñczyków: pracê 16h dziennie w chiñskiej knajpie");
+    end
+     
+    rule "Ans30"
+            when
+                    Budget(value > 20000)
+                    Acrophobia( value == false )
+                    Culture(value == 0)
+                    ChineseFood ( value == false)
+                    Sea(value == false)
+            then
+                    Ask.answer("Lecisz Dreamlinerem do Tokio.\nNa miejscu czeka Ciê zwiedzanie niezliczonych wysp i poznawanie kultury tego kraju. Dodatkowo zostaniesz uczestnikiem kursu przyrz¹dzania sushi.");
+    end
+     
+    rule "Ans31"
+            when
+                    Budget(value > 20000)
+                    Acrophobia( value == true )
+                    Sea ( value == true)
+                    Culture(value == 0)
+                    ChineseFood ( value == false)
+            then
+                    Ask.answer("P³yniesz na pok³adzie SeaQueen do Tokio.\n Na miejscu czeka Ciê zwiedzanie niezliczonych œwi¹tyñ i poznawanie wszystkich smaków sushi.");
+    end
+           
+    rule "Ans32"
+            when
+                    Budget(value < 20001)
+                    Acrophobia( value == false )
+                    Culture(value == 0)
+                    ChineseFood ( value == false)
+                    Sea(value == false)
+            then
+                    Ask.answer("Kolej¹ przejedziesz na chiñskie wybrze¿e.\nTam tanim wycieczkowcem podró¿ujesz dalej ku stolicy Japonii, wszystko by spróbowaæ prawdziwego sushi.");
+    end
+     
+    rule "Ans33"
+            when
+                    Budget(value < 20001)
+                    Acrophobia( value == true )
+                    Sea ( value == true)
+                    Culture(value == 0)
+                    ChineseFood ( value == false)
+            then
+                    Ask.answer("P³yniesz kajakiem 7 000km by spróbowaæ owoców morza i poznaæ s³awn¹ japoñsk¹ kulturê.");
+    end
+
+rule "Ans34"
+        when
+                Warm ( value == false)
+        then
+                Ask.answer("Jak nie lubisz ciep³a, czeka Ciê wycieczka na Syberiê sponsorowana przez ZSSR (tak wiemy, ¿e nie istnieje, ale zosta³o parê biletów). \nOdmro¿enia, œmieræ z wyziêbienia, dzikie zwierzêta i nie mniej dzicy tubylcy - wszystkie te atrakcje ju¿ niebawem! Mi³ej zabawy!");
+end
+
+rule "Ans35"
+        when
+               
+                Acrophobia( value == false )
+                Sea ( value == true)
+        then
+                Ask.answer("Czeka na ciebie kurs spadochroniarski, ze skokami do wody z przygotowanym sprzêtam do podwodnego nurkowania. Niema nic trudniejszego, ale wierzymy, ¿e dasz radê!");
+end
