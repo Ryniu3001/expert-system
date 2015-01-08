@@ -14,7 +14,7 @@
 <org.drools.audit.event.ObjectLogEvent>
   <type>1</type>
   <factId>1</factId>
-  <objectToString>com.sample.DroolsTest$Age@75cd8043</objectToString>
+  <objectToString>com.sample.DroolsTest$Age@10b9db7b</objectToString>
 </org.drools.audit.event.ObjectLogEvent>
 <org.drools.audit.event.ActivationLogEvent>
   <type>7</type>
